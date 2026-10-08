@@ -4,7 +4,7 @@ Background for `readme.md`: why the pipeline has two stages, what each one does 
 
 Kind of file this program is meant for: A large Markdown file with hundreds of thousands of lines, written over years, full of notes that may repeat each other in different words
 and above all, a confidential file you cannot feed a conventional LLM. The aim is to find duplicates within the md file and sort them with a standard local GPU (the machine runs local models of 9 to 27 billion parameters at best). Additionally, no local model could hold the whole file in its context, so the work is split:
-a small embedding model compares every note with every other and shortlists the pairs that look alike, and a local LLM reads only that shortlist, one pair at a time.
+a small embedding model compares every note with every other and shortlists the pairs that look alike, and a local LLM reads only that shortlist, one pair at a time. Lines it calls the same are then put together in groups.
 
 ## Stage 0: test on the synthetic sample first
 `sample\sample.md` is an invented diary of about 6,400 words, shaped like a real notes file: no dates, `#` and `---` splits, mostly `-` bullets, loose lines, some French, some code words. It holds 150 labelled pairs: 129 true duplicates of 15 kinds and 21 look-alikes that must not be merged. `sample\answer_key.md` lists them all.
@@ -13,7 +13,7 @@ a small embedding model compares every note with every other and shortlists the 
 python build_sample.py                             # only needed after editing sample\sample_source.md
 python run.py sample\sample.md qwen/qwen3.5-9b     # everything else, into a new folder runs\sample, runs\sample (1), ...
 ```
-`run.py` runs Stage 1 with a wide net (every pair scoring 0.50 or more), scores it against the answer key, shows the FLOOR table and chooses the FLOOR itself: the highest one that keeps every true duplicate Stage 1 found (0.60 on the sample today). It then cuts `candidates.json` to that FLOOR, runs Stage 2 on it and scores again. A third argument, `python run.py sample\sample.md <model id> 0.70`, overrules the choice. For a file with no answer key the program cannot choose, so it shows how many pairs each FLOOR keeps and asks. A run never writes outside its own folder, so earlier runs are kept.
+`run.py` runs Stage 1 with a wide net (every pair scoring 0.50 or more), scores it against the answer key, shows the FLOOR table and chooses the FLOOR itself: the highest one that keeps every true duplicate Stage 1 found (0.60 on the sample today). It then cuts `candidates.json` to that FLOOR, keeps the pairs under it in `below_floor.json`, runs Stage 2 and scores again. A third argument, `python run.py sample\sample.md <model id> 0.70`, overrules the choice. For a file with no answer key the program cannot choose, so it shows how many pairs each FLOOR keeps and asks. A run never writes outside its own folder, so earlier runs are kept.
 
 `sample\sample_source.md` is the master copy of the sample and is never fed to the pipeline. In it every planted duplicate is wrapped in markers, e.g. `{{PP03.a}}one wording{{/}}` and `{{PP03.b}}another wording{{/}}`. `build_sample.py` strips the markers to produce `sample.md` and the answer key. To add a tricky case of your own, wrap both versions the same way (the prefixes are listed at the top of `build_sample.py`) and rebuild. Only invented text goes in there.
 
@@ -29,12 +29,22 @@ The score at that point is the FLOOR for that document.
 
 ## Stage 2 script: llm_filtering.py
 The judge runs in LM Studio, and the script drives it with LM Studio's own `lms` command so the window never has to open: `python llm_filtering.py qwen/qwen3.5-9b` (the model id as `lms ls` shows it).
-It starts the server on 127.0.0.1:1234 if it is not up, and loads and unloads the models as the readme's section 2 describes. A pair LM Studio fails on is tried up to 4 times in all, 15 seconds apart, with the judge reloaded from the second failure on. Each verdict is appended to `verdicts_so_far.jsonl` as it comes, so a run that still dies is continued by running the same command on the same folder. A server the script starts is bound to this machine only; one that was already running is used as it is (see the warning in the readme's privacy section).
+It starts the server on 127.0.0.1:1234 if it is not up, and loads and unloads the models as the readme's section 2 describes. A pair LM Studio fails on is tried up to 4 times in all, 15 seconds apart, with the judge reloaded from the second failure on. Each verdict is appended to `verdicts_so_far.jsonl` as it comes, so a run that still dies is continued by running the same command on the same folder. Given an earlier run's folder as last argument, it takes over that run's SAME, OVERLAP and DIFFERENT for every pair with the same two texts and asks the judge only the rest (the readme's "Starting from an earlier run"). A server the script starts is bound to this machine only; one that was already running is used as it is (see the warning in the readme's privacy section).
+The judge reads one pair at a time, in three rounds, and stays loaded for all three:
+1. Every pair of `candidates.json`, the pairs at or above the FLOOR.
+2. Near-misses. Lines joined by SAME verdicts, directly or through another line, form a group. A pair of `below_floor.json` that has a line in a group is read too. A line that joins a group this way brings its own near-misses, so the round repeats until nothing new qualifies. This is how a version that Stage 1 scored too low still ends up with the others; a pair under the FLOOR with no line in any group is never read.
+3. Cross-check. Inside each group, the pairs nobody has read yet: if A = B and B = C came from the judge, A and C have to be put to it as well. A group of more than 8 lines (`CROSS_ALL`) is checked line by line against its best-linked line instead.
+
+A group is never split by the program. When the judge does not call a pair inside it SAME, the group stays and `review.md` names the pair. OVERLAP does not build groups: a line can share half its content with two lines that have nothing in common.
+The number of pairs is printed before rounds 2 and 3 start. Round 2 can never read more pairs than `below_floor.json` holds.
+
 One-time setup in the LM Studio app: open it once (that installs `lms`), download the model, and untick Thinking for it. The judge only has to answer one word, and reasoning makes every pair many times slower.
 Besides review.md it writes verdicts.json, which score.py reads; both go into the run folder when `run.py` drives it. To use a server you manage yourself, set `LLM_BASE_URL` and the script starts and stops nothing. Your notes then go to that address, so for a confidential file keep it on this machine.
 
 ## Things to expect
-- The same idea may appear three or four times, which shows up as several overlapping pairs. When you review, handle it as one group with a single merge decision.
+- The same idea may appear three or four times. It comes out as one group, with a single merge decision.
+- A group is only as good as the SAME verdicts that hold it together: one wrong SAME joins two ideas into one group. The cross-check is what shows it, as a group with `x of y pairs SAME` and the pairs the judge did not agree on named underneath. Those groups are listed last; read them before merging.
+- A line that scored under the FLOOR against everything is only found if one of its look-alikes got into a group. Two versions of a thought that both sit under the FLOOR, with no third one above it, stay unseen.
 - Some redundancy works at a different scale. For example, one sentence might summarize a whole paragraph elsewhere. Sentence-level embeddings will catch some of these but not all. A second pass with paragraphs as units instead of sentences would pick up more of them; the scripts do not do that today.
 
 ## Troubleshooting

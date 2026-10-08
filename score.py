@@ -3,6 +3,7 @@
 # defaults: this folder, sample/ground_truth.json. Reads candidates.json and, if it is there, verdicts.json
 # from the run folder. The report goes to score.md in that folder; the console only gets the headlines and
 # the FLOOR table. The note ends up in the report's title (run.py puts the judge and the FLOOR there).
+# Stage 2 is scored pair by pair and also by group: the lines review.md shows together, joined by SAME verdicts.
 import re, os, sys, json, itertools, collections
 
 args = sys.argv[1:] + [None] * 3
@@ -56,6 +57,15 @@ def show(c): return f"    L{c['a_line']}: {short(c['a'])}\n    L{c['b_line']}: {
 def tags(c):
     t = sorted({f"{i}.{m}" for side in ("a", "b") for i, m in who(c[side + "_line"], c[side])})
     return "  [touches " + ", ".join(t) + "]" if t else ""
+def sim(c): return "n/a" if c["score"] is None else f"{c['score']:.3f}"      # no score: a cross-check, Stage 1 never paired it
+def union():                                  # sets that grow by joining: join(a, b) merges two, root(x) names the one x is in
+    link = {}
+    def root(x):
+        link.setdefault(x, x)
+        while link[x] != x: link[x] = link[link[x]]; x = link[x]
+        return x
+    def join(a, b): link[root(a)] = root(b)
+    return link, root, join
 
 pairs = [(it["id"], pair) for it in truth["items"]
          for pair in itertools.combinations(sorted(it["members"]), 2)]
@@ -107,12 +117,10 @@ for cat, c in CATS.items():
     out.append(f"{cat}  {len(hit):>2}/{len(mine):<2}  {c['description']}  ({note})")
     if any(len(members[i]) > 2 for i, _ in mine):      # repeated ideas: what matters is that all versions end up linked
         for iid in sorted({i for i, _ in mine}):
-            link = {m: m for m in members[iid]}
-            def root(m):
-                while link[m] != m: m = link[m]
-                return m
+            link, root, join = union()
+            for m in members[iid]: root(m)
             got = [p for p in hit if p[0] == iid]
-            for _, (m, n) in got: link[root(m)] = root(n)
+            for _, (m, n) in got: join(m, n)
             groups = len({root(m) for m in link})
             lost = ["-".join(p[1]) + "*" * too_short(*p) for p in mine if p[0] == iid and p not in found]
             out.append(f"        {iid}  {len(got)}/{len(got) + len(lost)} pairs, {len(link)} versions "
@@ -139,8 +147,27 @@ if not os.path.exists(verd_path):
     finish()
 verdicts = json.load(open(verd_path, encoding="utf-8"))
 LABELS = ["SAME", "OVERLAP", "DIFFERENT", "UNCLEAR"]
+LISTED = {"SAME", "OVERLAP", "UNCLEAR"}       # the verdicts that put a pair's two lines together in review.md
+def node(v, side): return v.get(side + "_id", (v[side + "_line"], v[side]))   # the second form: a folder from before the notes were numbered
+
+# the groups of review.md, rebuilt the way llm_filtering.py builds them
+link, root, join = union()
+for v in verdicts:
+    if v["verdict"] == "SAME": join(node(v, "a"), node(v, "b"))
+text = {node(v, side): (v[side + "_line"], v[side]) for v in verdicts for side in "ab"}
+groups = collections.defaultdict(list)
+for x in sorted(link, key=lambda x: text[x][0]): groups[root(x)].append(x)
+planted = {g: {version for x in lines for version in who(*text[x])} for g, lines in groups.items()}   # per group, the (item, version) among its lines
+together = {(i, (m, n)) for versions in planted.values()
+            for (i, m), (j, n) in itertools.combinations(sorted(versions), 2) if i == j}
+def mixes(versions):                          # two planted ideas in one group, or both sides of a look-alike that is not a duplicate
+    items = collections.Counter(i for i, _ in versions)
+    return len(items) > 1 or any(n > 1 and CATS[i[:2]]["kind"] == "neg" for i, n in items.items())
+mixed = [g for g, versions in planted.items() if mixes(versions)]
+
 conf, per_cat, bg = collections.Counter(), collections.defaultdict(lambda: [0, 0]), collections.Counter()
-hidden, noise, bg_same, strict, ok, judged = [], [], [], 0, 0, 0
+said = collections.defaultdict(set)           # labelled pair -> the (verdict, round) it got
+hidden, held, noise, bg_same, strict, ok, judged = [], [], [], [], 0, 0, 0
 for v in verdicts:
     key = planted_pair(v)
     if not key:
@@ -149,21 +176,46 @@ for v in verdicts:
         continue
     cat = CATS[key[0][:2]]
     judged += 1
+    said[key].add((v["verdict"], v.get("via", "floor")))
     conf[cat["expected"], v["verdict"]] += 1
     strict += v["verdict"] == cat["expected"]
     good = v["verdict"] in cat["acceptable"]
     ok += good; per_cat[key[0][:2]][0] += good; per_cat[key[0][:2]][1] += 1
-    if cat["kind"] == "dup" and v["verdict"] == "DIFFERENT": hidden.append((key[0], v))
+    if cat["kind"] == "dup" and v["verdict"] == "DIFFERENT": (held if key in together else hidden).append((key[0], v))
     if cat["kind"] == "neg" and not good: noise.append((key[0], v))
 
-reached = f"{len(verdicts)} pairs judged, {judged} of them labelled ({len(pairs) - judged} labelled pairs never reached the judge)"
+how = collections.Counter()                   # what put each true duplicate's two lines together in review.md, None if nothing did
+for p in dups:
+    rounds = {via for verdict, via in said.get(p, ()) if verdict in LISTED}
+    how[next((r for r in ("floor", "near", "cross") if r in rounds), "group" if p in together else None)] += 1
+
+many, whole, repeated = [it["id"] for it in truth["items"] if len(it["members"]) > 2], 0, []
+for iid in many:                              # an idea written three times or more should come out as one group
+    parts = sorted((sorted(m for i, m in versions if i == iid) for versions in planted.values()), key=lambda part: -len(part))
+    parts = [part for part in parts if part]
+    alone = [m for m in sorted(members[iid]) if not any(m in part for part in parts)]
+    whole += len(parts) == 1 and not alone
+    repeated.append(f"{iid}  {len(members[iid])} versions: "
+                    + ("all in one group" if len(parts) == 1 and not alone else
+                       "SPLIT into " * (len(parts) > 1) + " ".join("(" + " ".join(part) + ")" for part in parts)
+                       + ("   " * bool(parts) + "in no group: " + " ".join(alone)) * bool(alone) + "   <-- look here"))
+
+by = collections.Counter(v.get("via", "floor") for v in verdicts)
+reached = (f"{len(verdicts)} pairs judged ({by['floor']} at or above the FLOOR, {by['near']} near-misses, {by['cross']} cross-checks), "
+           f"{judged} of them labelled ({len(set(pairs) - set(said))} labelled pairs never reached the judge)")
 if not judged:
     section("Stage 2", [reached])
     finish("no labelled pair in the verdicts, nothing to score")
 section("Stage 2", [reached,
+                    f"Groups in review.md: {len(groups)}, holding {len(link)} lines",
+                    f"True duplicates shown together in review.md: {len(dups) - how[None]}/{len(dups)} ({how['floor']} judged at or above "
+                    f"the FLOOR, {how['near']} as near-misses, {how['cross']} as cross-checks, {how['group']} only by sharing a group)",
+                    f"Ideas written 3 times or more that came out as one group: {whole}/{len(many)}",
+                    f"Groups mixing different planted ideas: {len(mixed)}",
                     f"Exact agreement with the answer key: {strict}/{judged} ({100 * strict / judged:.0f}%)",
                     f"Acceptable verdicts: {ok}/{judged} ({100 * ok / judged:.0f}%)",
                     f"True duplicates the judge hid as DIFFERENT (these vanish from review.md): {len(hidden)}",
+                    f"True duplicates the judge called DIFFERENT that a group still shows together: {len(held)}",
                     f"Hard negatives the judge did not reject: {len(noise)}",
                     "Unlabelled pairs: " + ", ".join(f"{bg[l]} {l}" for l in LABELS)])
 md.extend(["", "| answer key \\ judge | " + " | ".join(LABELS) + " |", "|---|" + "---:|" * len(LABELS)])
@@ -171,13 +223,22 @@ for e in LABELS[:3]:
     say(f"| {e} | " + " | ".join(str(conf[e, l]) for l in LABELS) + " |")
 md.extend(["", "Acceptable per kind: " + "   ".join(f"{cat} {a}/{n}" for cat, (a, n) in per_cat.items())])
 
+section(f"Ideas written 3 times or more that came out as one group: {whole}/{len(many)}")
+say("The versions of each, by the group review.md puts them in.")
+block(repeated)
+section(f"Groups mixing different planted ideas: {len(mixed)}")
+say("A group holding two planted ideas, or both sides of a look-alike that is not a duplicate. The list should be empty: "
+    "each entry is a wrong SAME that joined them, unless the two ideas really say the same.")
+block([f"  one group of {len(groups[g])} lines\n"
+       + "\n".join(f"    L{text[x][0]}: {short(text[x][1])}" + "".join(f"  [{i}.{m}]" for i, m in sorted(who(*text[x]))) for x in groups[g])
+       for g in mixed])
 section(f"True duplicates the judge hid as DIFFERENT: {len(hidden)}")
-say("These pairs never reach review.md. The list should be empty or nearly so.")
-block([f"  {iid}  score {v['score']:.3f}\n{show(v)}" for iid, v in hidden])
+say("These pairs never reach review.md: the judge said DIFFERENT and no group holds both lines. The list should be empty or nearly so.")
+block([f"  {iid}  score {sim(v)}\n{show(v)}" for iid, v in hidden])
 section(f"Hard negatives the judge did not reject: {len(noise)}")
 say("Look-alikes that are not duplicates but still show up in review.md.")
 block([f"  {iid}  judged {v['verdict']}\n{show(v)}" for iid, v in noise])
 section(f"Unlabelled pairs judged SAME: {len(bg_same)}")
 say("Not in the answer key. The first 15, best score first.")
-block([f"  score {v['score']:.3f}{tags(v)}\n{show(v)}" for v in bg_same[:15]])
+block([f"  score {sim(v)}{tags(v)}\n{show(v)}" for v in sorted(bg_same, key=lambda v: -(v["score"] or 0))[:15]])
 finish()

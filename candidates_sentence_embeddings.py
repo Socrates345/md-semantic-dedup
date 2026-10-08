@@ -44,13 +44,14 @@ np.fill_diagonal(sim, -1)
 K, FLOOR = 5, float(sys.argv[3]) if len(sys.argv) > 3 else 0.70   # each sentence's 5 closest matches, if similarity >= FLOOR
 pairs = set()
 for i in range(len(sents)):
-    for j in np.argsort(-sim[i])[:K]:
+    for j in map(int, np.argsort(-sim[i])[:K]):   # int: the ids below are written out, and numpy's integers are not JSON
         if round(float(sim[i, j]), 3) >= FLOOR:   # the rounded score is the one written out and the one run.py's FLOOR applies to
             pairs.add((min(i, j), max(i, j)))
 
+# a_id and b_id number the notes in file order: Stage 2 groups by them, since two notes can share a line number
 out = sorted(({"score": round(float(sim[i, j]), 3),
-               "a_line": sents[i][0], "a": sents[i][1],
-               "b_line": sents[j][0], "b": sents[j][1]} for i, j in pairs),
+               "a_id": i, "a_line": sents[i][0], "a": sents[i][1],
+               "b_id": j, "b_line": sents[j][0], "b": sents[j][1]} for i, j in pairs),
              key=lambda c: -c["score"])
 json.dump(out, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"{len(out)} candidate pairs scoring {FLOOR:.2f} or more -> {OUT}")

@@ -1,0 +1,11 @@
+# virtual environment and model caches
+.venv/
+__pycache__/
+
+# results: these contain the source file's text word for word
+runs/
+/candidates.json
+/verdicts.json
+/verdicts_so_far.jsonl
+/review.md
+/score.md

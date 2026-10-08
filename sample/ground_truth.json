@@ -1,0 +1,2190 @@
+{
+ "categories": {
+  "EX": {
+   "description": "Verbatim copy in another entry",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME"
+   ],
+   "stage1": "found"
+  },
+  "FM": {
+   "description": "Same sentence, different formatting (inside a paragraph, bold, wikilink, heading, nested bullet)",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME"
+   ],
+   "stage1": "found"
+  },
+  "HW": {
+   "description": "Sentence hard-wrapped over two lines (Stage 1 treats every line as its own note)",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "miss"
+  },
+  "NR": {
+   "description": "Near-copy: typo, spelling, word order, punctuation",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "found"
+  },
+  "PP": {
+   "description": "Paraphrase carrying the same information",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "found"
+  },
+  "OV": {
+   "description": "One version adds a detail",
+   "kind": "dup",
+   "expected": "OVERLAP",
+   "acceptable": [
+    "OVERLAP",
+    "SAME"
+   ],
+   "stage1": "found"
+  },
+  "FR": {
+   "description": "English sentence and its French version",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "found"
+  },
+  "CW": {
+   "description": "Plain word vs code word (porn/corn, alcohol/sauce, ...)",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "found"
+  },
+  "GR": {
+   "description": "Same idea written 3 to 7 times",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "found"
+  },
+  "BL": {
+   "description": "Copy-pasted block of bullets",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME"
+   ],
+   "stage1": "found"
+  },
+  "SM": {
+   "description": "One sentence summarising several bullets elsewhere",
+   "kind": "dup",
+   "expected": "OVERLAP",
+   "acceptable": [
+    "OVERLAP",
+    "SAME"
+   ],
+   "stage1": "partial"
+  },
+  "SH": {
+   "description": "Short duplicate, under 40 characters",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "found"
+  },
+  "ST": {
+   "description": "Parser stress: bullet glued to ---, mid-bullet sentence, e.g./Dr., checkbox, nesting, run-on",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "found"
+  },
+  "MS": {
+   "description": "Sloppy rewording: lowercase, abbreviations, typos, symbols",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "found"
+  },
+  "LN": {
+   "description": "Thought sitting in a run of loose lines (no bullets, no blank lines, no full stops)",
+   "kind": "dup",
+   "expected": "SAME",
+   "acceptable": [
+    "SAME",
+    "OVERLAP"
+   ],
+   "stage1": "found"
+  },
+  "NF": {
+   "description": "Same template, different day or event",
+   "kind": "neg",
+   "expected": "DIFFERENT",
+   "acceptable": [
+    "DIFFERENT"
+   ],
+   "stage1": "any"
+  },
+  "CF": {
+   "description": "Same statement with a changed value (conflicting versions, worth a look)",
+   "kind": "neg",
+   "expected": "DIFFERENT",
+   "acceptable": [
+    "DIFFERENT",
+    "OVERLAP"
+   ],
+   "stage1": "any"
+  },
+  "NG": {
+   "description": "Negation or opposite",
+   "kind": "neg",
+   "expected": "DIFFERENT",
+   "acceptable": [
+    "DIFFERENT"
+   ],
+   "stage1": "any"
+  },
+  "TP": {
+   "description": "Same topic, different information",
+   "kind": "neg",
+   "expected": "DIFFERENT",
+   "acceptable": [
+    "DIFFERENT"
+   ],
+   "stage1": "any"
+  }
+ },
+ "items": [
+  {
+   "id": "EX01",
+   "category": "EX",
+   "members": {
+    "a": [
+     {
+      "line": 4,
+      "text": "I do my best deep work between 6 and 9 in the morning, before anyone is online."
+     }
+    ],
+    "b": [
+     {
+      "line": 308,
+      "text": "I do my best deep work between 6 and 9 in the morning, before anyone is online."
+     }
+    ]
+   }
+  },
+  {
+   "id": "EX02",
+   "category": "EX",
+   "members": {
+    "a": [
+     {
+      "line": 36,
+      "text": "Call the bank about the duplicate charge on the joint account."
+     }
+    ],
+    "b": [
+     {
+      "line": 364,
+      "text": "Call the bank about the duplicate charge on the joint account."
+     }
+    ]
+   }
+  },
+  {
+   "id": "EX03",
+   "category": "EX",
+   "members": {
+    "a": [
+     {
+      "line": 126,
+      "text": "Dad sounded tired on the phone, I should visit before the end of the month."
+     }
+    ],
+    "b": [
+     {
+      "line": 444,
+      "text": "Dad sounded tired on the phone, I should visit before the end of the month."
+     }
+    ]
+   }
+  },
+  {
+   "id": "EX04",
+   "category": "EX",
+   "members": {
+    "a": [
+     {
+      "line": 190,
+      "text": "Stretching for ten minutes after a run prevents the knee pain almost completely."
+     }
+    ],
+    "b": [
+     {
+      "line": 498,
+      "text": "Stretching for ten minutes after a run prevents the knee pain almost completely."
+     }
+    ]
+   }
+  },
+  {
+   "id": "EX05",
+   "category": "EX",
+   "members": {
+    "a": [
+     {
+      "line": 234,
+      "text": "Stop checking email before breakfast, it sets a reactive tone for the whole day."
+     }
+    ],
+    "b": [
+     {
+      "line": 545,
+      "text": "Stop checking email before breakfast, it sets a reactive tone for the whole day."
+     }
+    ]
+   }
+  },
+  {
+   "id": "FM01",
+   "category": "FM",
+   "members": {
+    "a": [
+     {
+      "line": 34,
+      "text": "Never schedule meetings on Wednesday afternoons, that slot is reserved for writing."
+     }
+    ],
+    "b": [
+     {
+      "line": 182,
+      "text": "Never schedule meetings on Wednesday afternoons, that slot is reserved for writing."
+     }
+    ]
+   }
+  },
+  {
+   "id": "FM02",
+   "category": "FM",
+   "members": {
+    "a": [
+     {
+      "line": 106,
+      "text": "The Atlas migration has to be finished before the audit in June."
+     }
+    ],
+    "b": [
+     {
+      "line": 375,
+      "text": "The [[Atlas]] migration has to be finished before the audit in June."
+     }
+    ]
+   }
+  },
+  {
+   "id": "FM03",
+   "category": "FM",
+   "members": {
+    "a": [
+     {
+      "line": 133,
+      "text": "Reading fiction for twenty minutes before bed makes me fall asleep faster."
+     }
+    ],
+    "b": [
+     {
+      "line": 440,
+      "text": "Reading fiction for twenty minutes before bed makes me fall asleep faster."
+     }
+    ]
+   }
+  },
+  {
+   "id": "FM04",
+   "category": "FM",
+   "members": {
+    "a": [
+     {
+      "line": 273,
+      "text": "Protect the first hour of the day from screens and notifications"
+     }
+    ],
+    "b": [
+     {
+      "line": 557,
+      "text": "Protect the first hour of the day from screens and notifications."
+     }
+    ]
+   }
+  },
+  {
+   "id": "HW01",
+   "category": "HW",
+   "members": {
+    "a": [
+     {
+      "line": 214,
+      "text": "When I feel overwhelmed, writing down the three next concrete actions calms me down."
+     }
+    ],
+    "b": [
+     {
+      "line": 523,
+      "text": "When I feel overwhelmed, writing down the three next concrete actions calms me down."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NR01",
+   "category": "NR",
+   "members": {
+    "a": [
+     {
+      "line": 25,
+      "text": "Booked the physio appointment for Thursday at 5pm, need to bring the old scans."
+     }
+    ],
+    "b": [
+     {
+      "line": 363,
+      "text": "Booked the phsyio appointement for Thursday at 5pm, need to bring the old scans."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NR02",
+   "category": "NR",
+   "members": {
+    "a": [
+     {
+      "line": 114,
+      "text": "Cancelling the gym membership and running outside instead saves me 45 euros a month."
+     }
+    ],
+    "b": [
+     {
+      "line": 427,
+      "text": "Canceling the gym membership and running outside instead saves me 45 euros per month."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NR03",
+   "category": "NR",
+   "members": {
+    "a": [
+     {
+      "line": 134,
+      "text": "On Sundays I plan the week: meals, workouts and the three priorities for work."
+     }
+    ],
+    "b": [
+     {
+      "line": 487,
+      "text": "I plan the week on Sundays: workouts, meals, and the three work priorities."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NR04",
+   "category": "NR",
+   "members": {
+    "a": [
+     {
+      "line": 202,
+      "text": "Maya wants us to book the trip to Lisbon before prices go up in April."
+     }
+    ],
+    "b": [
+     {
+      "line": 510,
+      "text": "maya wants us to book the trip to lisbon before prices go up in april!!"
+     }
+    ]
+   }
+  },
+  {
+   "id": "NR05",
+   "category": "NR",
+   "members": {
+    "a": [
+     {
+      "line": 235,
+      "text": "The landlord finally agreed to fix the bathroom fan next week."
+     }
+    ],
+    "b": [
+     {
+      "line": 554,
+      "text": "The landlord has finally agreed to repair the bathroom fan next week."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NR06",
+   "category": "NR",
+   "members": {
+    "a": [
+     {
+      "line": 300,
+      "text": "Piano practice works better in two short sessions than in one long one."
+     }
+    ],
+    "b": [
+     {
+      "line": 610,
+      "text": "Piano practice works better in two short sessions than one long one, I think."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP01",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 12,
+      "text": "My energy crashes around 3pm whenever I eat a heavy lunch."
+     }
+    ],
+    "b": [
+     {
+      "line": 320,
+      "text": "If lunch is too big I get completely drained in the middle of the afternoon."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP02",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 107,
+      "text": "I should say no to new side projects until Atlas is delivered."
+     }
+    ],
+    "b": [
+     {
+      "line": 376,
+      "text": "Until the Atlas migration ships, I won't take on any additional side projects."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP03",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 94,
+      "text": "Tom still owes me the 300 euros I lent him for the car repair."
+     }
+    ],
+    "b": [
+     {
+      "line": 385,
+      "text": "My brother hasn't paid back the 300 euros he borrowed to get his car fixed."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP04",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 127,
+      "text": "Walking for half an hour at lunchtime clears my head better than coffee."
+     }
+    ],
+    "b": [
+     {
+      "line": 477,
+      "text": "A thirty-minute walk during the lunch break does more for my mental clarity than a coffee does."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP05",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 185,
+      "text": "Priya told me my presentations are too long and I need to get to the point faster."
+     }
+    ],
+    "b": [
+     {
+      "line": 497,
+      "text": "Feedback from my manager: I take too long to reach the main point when I present."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP06",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 212,
+      "text": "I keep buying books faster than I can read them, there are fourteen unread ones on the shelf."
+     }
+    ],
+    "b": [
+     {
+      "line": 526,
+      "text": "Fourteen books on my shelf are still unread because I buy new ones quicker than I finish them."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP07",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 223,
+      "text": "Arguments with Maya almost always start when we are both hungry and tired."
+     }
+    ],
+    "b": [
+     {
+      "line": 535,
+      "text": "Maya and I mostly fight when the two of us are exhausted and haven't eaten."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP08",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 275,
+      "text": "The phone stays outside the bedroom from now on, I bought a real alarm clock."
+     }
+    ],
+    "b": [
+     {
+      "line": 600,
+      "text": "From now on I'm leaving my phone out of the bedroom at night; got an actual alarm clock for that."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP09",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 85,
+      "text": "I procrastinate most on tasks where I don't know what the first step is."
+     }
+    ],
+    "b": [
+     {
+      "line": 357,
+      "text": "The things I put off the longest are the ones where the first step is unclear to me."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP10",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 151,
+      "text": "Money stress disappears when I look at the actual numbers instead of guessing."
+     }
+    ],
+    "b": [
+     {
+      "line": 421,
+      "text": "Whenever I check the real figures rather than imagining them, my anxiety about money goes away."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP11",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 216,
+      "text": "I feel lonely in the evenings when Maya is travelling for work."
+     }
+    ],
+    "b": [
+     {
+      "line": 464,
+      "text": "When Maya is away on a work trip the evenings feel empty."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP12",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 252,
+      "text": "Most of my bad decisions are made after 10pm."
+     }
+    ],
+    "b": [
+     {
+      "line": 501,
+      "text": "Almost every poor choice I make happens late in the evening, past ten."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP13",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 303,
+      "text": "Saying what I actually want at the start of a conversation saves everyone time."
+     }
+    ],
+    "b": [
+     {
+      "line": 558,
+      "text": "It is faster for everybody when I open a discussion by stating plainly what I'm after."
+     }
+    ]
+   }
+  },
+  {
+   "id": "PP14",
+   "category": "PP",
+   "members": {
+    "a": [
+     {
+      "line": 324,
+      "text": "The apartment feels twice as big when it is tidy."
+     }
+    ],
+    "b": [
+     {
+      "line": 591,
+      "text": "When everything is put away the flat seems to double in size."
+     }
+    ]
+   }
+  },
+  {
+   "id": "OV01",
+   "category": "OV",
+   "members": {
+    "a": [
+     {
+      "line": 27,
+      "text": "Signed up for the half marathon in October."
+     }
+    ],
+    "b": [
+     {
+      "line": 622,
+      "text": "Signed up for the half marathon in October, the training plan starts in July and peaks at 55 km a week."
+     }
+    ]
+   }
+  },
+  {
+   "id": "OV02",
+   "category": "OV",
+   "members": {
+    "a": [
+     {
+      "line": 115,
+      "text": "The doctor said the blood test is normal."
+     }
+    ],
+    "b": [
+     {
+      "line": 438,
+      "text": "The doctor said the blood test is normal except for vitamin D, so I'm starting supplements for three months."
+     }
+    ]
+   }
+  },
+  {
+   "id": "OV03",
+   "category": "OV",
+   "members": {
+    "a": [
+     {
+      "line": 191,
+      "text": "We agreed to split the rent 60/40 since I earn more."
+     }
+    ],
+    "b": [
+     {
+      "line": 499,
+      "text": "Maya and I agreed to split the rent 60/40 since I earn more, and to review it every January."
+     }
+    ]
+   }
+  },
+  {
+   "id": "OV04",
+   "category": "OV",
+   "members": {
+    "a": [
+     {
+      "line": 228,
+      "text": "The new standing desk helps my lower back."
+     }
+    ],
+    "b": [
+     {
+      "line": 536,
+      "text": "The standing desk helps my lower back, but only if I alternate every 45 minutes instead of standing all day."
+     }
+    ]
+   }
+  },
+  {
+   "id": "OV05",
+   "category": "OV",
+   "members": {
+    "a": [
+     {
+      "line": 299,
+      "text": "Jonas will take over the on-call rotation while I am on holiday."
+     }
+    ],
+    "b": [
+     {
+      "line": 609,
+      "text": "While I am on holiday in August Jonas takes over the on-call rotation, and I owe him two weekend shifts in return."
+     }
+    ]
+   }
+  },
+  {
+   "id": "OV06",
+   "category": "OV",
+   "members": {
+    "a": [
+     {
+      "line": 322,
+      "text": "I want to learn enough Spanish to order food and ask for directions."
+     }
+    ],
+    "b": [
+     {
+      "line": 650,
+      "text": "Goal for the trip: learn enough Spanish to order food and ask for directions, using the app 15 minutes a day."
+     }
+    ]
+   }
+  },
+  {
+   "id": "FR01",
+   "category": "FR",
+   "members": {
+    "a": [
+     {
+      "line": 97,
+      "text": "I feel much calmer when I spend the first ten minutes of the day without my phone."
+     }
+    ],
+    "b": [
+     {
+      "line": 430,
+      "text": "Je me sens beaucoup plus calme quand je passe les dix premières minutes de la journée sans mon téléphone."
+     }
+    ]
+   }
+  },
+  {
+   "id": "FR02",
+   "category": "FR",
+   "members": {
+    "a": [
+     {
+      "line": 201,
+      "text": "I need to call grandma more often, she is lonely since grandpa died."
+     }
+    ],
+    "b": [
+     {
+      "line": 509,
+      "text": "Il faut que j'appelle mamie plus souvent, elle se sent seule depuis la mort de papi."
+     }
+    ]
+   }
+  },
+  {
+   "id": "FR03",
+   "category": "FR",
+   "members": {
+    "a": [
+     {
+      "line": 288,
+      "text": "Saving 400 euros a month would be enough for the apartment deposit by next spring."
+     }
+    ],
+    "b": [
+     {
+      "line": 603,
+      "text": "En mettant 400 euros de côté chaque mois, j'aurai assez pour la caution de l'appartement au printemps prochain."
+     }
+    ]
+   }
+  },
+  {
+   "id": "FR04",
+   "category": "FR",
+   "members": {
+    "a": [
+     {
+      "line": 310,
+      "text": "Léa thinks I should ask for a raise before the end of the quarter."
+     }
+    ],
+    "b": [
+     {
+      "line": 619,
+      "text": "Léa pense que je devrais demander une augmentation avant la fin du trimestre."
+     }
+    ]
+   }
+  },
+  {
+   "id": "FR05",
+   "category": "FR",
+   "members": {
+    "a": [
+     {
+      "line": 330,
+      "text": "I'm afraid of becoming someone who only talks about work."
+     }
+    ],
+    "b": [
+     {
+      "line": 657,
+      "text": "J'ai peur de devenir quelqu'un qui ne parle que de son travail."
+     }
+    ]
+   }
+  },
+  {
+   "id": "CW01",
+   "category": "CW",
+   "members": {
+    "a": [
+     {
+      "line": 43,
+      "text": "Relapsed on corn last night after three clean weeks, felt foggy all morning."
+     }
+    ],
+    "b": [
+     {
+      "line": 662,
+      "text": "Watched porn again last night after three weeks clean and felt foggy the whole morning."
+     }
+    ]
+   }
+  },
+  {
+   "id": "CW02",
+   "category": "CW",
+   "members": {
+    "a": [
+     {
+      "line": 476,
+      "text": "No sauce for the whole month of March, sleep is noticeably deeper."
+     }
+    ],
+    "b": [
+     {
+      "line": 652,
+      "text": "I didn't drink any alcohol during all of March and my sleep got noticeably deeper."
+     }
+    ]
+   }
+  },
+  {
+   "id": "CW03",
+   "category": "CW",
+   "members": {
+    "a": [
+     {
+      "line": 213,
+      "text": "Broccoli on weeknights kills my motivation the next day, keep it for Saturdays only."
+     }
+    ],
+    "b": [
+     {
+      "line": 527,
+      "text": "Smoking weed on weeknights kills my motivation the following day, so only on Saturdays."
+     }
+    ]
+   }
+  },
+  {
+   "id": "CW04",
+   "category": "CW",
+   "members": {
+    "a": [
+     {
+      "line": 302,
+      "text": "Deleted the bird app from my phone, I was losing an hour a day scrolling it."
+     }
+    ],
+    "b": [
+     {
+      "line": 612,
+      "text": "Removed Twitter from my phone because I was wasting about an hour a day scrolling."
+     }
+    ]
+   }
+  },
+  {
+   "id": "CW05",
+   "category": "CW",
+   "members": {
+    "a": [
+     {
+      "line": 332,
+      "text": "Corn urges are strongest when I'm alone and bored after 11pm."
+     }
+    ],
+    "b": [
+     {
+      "line": 661,
+      "text": "The urge to watch porn hits hardest when I am bored and alone late at night, after 11pm."
+     }
+    ]
+   }
+  },
+  {
+   "id": "GR01",
+   "category": "GR",
+   "members": {
+    "a": [
+     {
+      "line": 18,
+      "text": "Going to bed before 11pm is the single biggest factor in how good the next day feels."
+     }
+    ],
+    "b": [
+     {
+      "line": 184,
+      "text": "Again: the days after I'm asleep by 11 are simply better, nothing else matters as much."
+     }
+    ],
+    "c": [
+     {
+      "line": 407,
+      "text": "Lesson I keep relearning, an early bedtime (before 11pm) decides the quality of the following day."
+     }
+    ]
+   }
+  },
+  {
+   "id": "GR02",
+   "category": "GR",
+   "members": {
+    "a": [
+     {
+      "line": 60,
+      "text": "Write ideas down the moment they come, otherwise they are gone within an hour."
+     }
+    ],
+    "b": [
+     {
+      "line": 238,
+      "text": "If I don't note an idea immediately I forget it in less than an hour."
+     }
+    ],
+    "c": [
+     {
+      "line": 374,
+      "text": "Capture every idea right away, my memory does not keep them for even an hour."
+     }
+    ],
+    "d": [
+     {
+      "line": 556,
+      "text": "Noter les idées tout de suite, sinon je les oublie en moins d'une heure."
+     }
+    ]
+   }
+  },
+  {
+   "id": "GR03",
+   "category": "GR",
+   "members": {
+    "a": [
+     {
+      "line": 120,
+      "text": "Comparing myself to people on Instagram makes me miserable for no reason."
+     }
+    ],
+    "b": [
+     {
+      "line": 323,
+      "text": "Every time I compare my life to what others post on Instagram I end up feeling miserable."
+     }
+    ],
+    "c": [
+     {
+      "line": 651,
+      "text": "Instagram comparison is poison for my mood, I feel worse after every session."
+     }
+    ]
+   }
+  },
+  {
+   "id": "GR04",
+   "category": "GR",
+   "members": {
+    "a": [
+     {
+      "line": 74,
+      "text": "If I don't exercise in the morning it simply does not happen that day."
+     }
+    ],
+    "b": [
+     {
+      "line": 206,
+      "text": "Workouts only happen when I do them first thing, evening plans never survive."
+     }
+    ],
+    "c": [
+     {
+      "line": 312,
+      "text": "sport = morning or never, the evening version of me always finds an excuse"
+     }
+    ],
+    "d": [
+     {
+      "line": 408,
+      "text": "Si je ne fais pas de sport le matin, je n'en fais pas du tout."
+     }
+    ],
+    "e": [
+     {
+      "line": 547,
+      "text": "Reminder to self: train before work, because after work I will not do it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "GR05",
+   "category": "GR",
+   "members": {
+    "a": [
+     {
+      "line": 137,
+      "text": "Anything I plan for \"sometime this weekend\" does not get done, it needs an exact time slot."
+     }
+    ],
+    "b": [
+     {
+      "line": 263,
+      "text": "Vague plans like doing it at the weekend never happen, I have to put a precise hour on them."
+     }
+    ],
+    "c": [
+     {
+      "line": 342,
+      "text": "no time slot = not happening. \"this weekend\" is not a plan"
+     }
+    ],
+    "d": [
+     {
+      "line": 467,
+      "text": "Tasks without a specific time in the calendar just slide to the following week."
+     }
+    ]
+   }
+  },
+  {
+   "id": "GR06",
+   "category": "GR",
+   "members": {
+    "a": [
+     {
+      "line": 99,
+      "text": "Getting daylight before noon lifts my mood more than anything I can do indoors."
+     }
+    ],
+    "b": [
+     {
+      "line": 278,
+      "text": "My mood is clearly better on days when I go outside in the morning light."
+     }
+    ],
+    "c": [
+     {
+      "line": 379,
+      "text": "morning daylight, even 15 minutes on the balcony, changes the whole day for me"
+     }
+    ]
+   }
+  },
+  {
+   "id": "GR07",
+   "category": "GR",
+   "members": {
+    "a": [
+     {
+      "line": 37,
+      "text": "I waste hours stuck on a problem before asking for help, I should ask after thirty minutes."
+     }
+    ],
+    "b": [
+     {
+      "line": 173,
+      "text": "Ask for help sooner: being stuck alone for half a day is not heroic, just slow."
+     }
+    ],
+    "c": [
+     {
+      "line": 240,
+      "text": "stuck > 30 min → ask someone. stop grinding alone for hours"
+     }
+    ],
+    "d": [
+     {
+      "line": 314,
+      "text": "Again lost a whole afternoon on something Jonas solved in five minutes, I should have asked him much earlier."
+     }
+    ],
+    "e": [
+     {
+      "line": 354,
+      "text": "Rule: if I am blocked for more than half an hour, I ask a colleague instead of pushing on by myself."
+     }
+    ],
+    "f": [
+     {
+      "line": 453,
+      "text": "Je perds trop de temps à rester bloqué tout seul, il faut demander de l'aide plus vite."
+     }
+    ],
+    "g": [
+     {
+      "line": 578,
+      "text": "Asking for help early is not weakness, it saves hours of being stuck."
+     }
+    ]
+   }
+  },
+  {
+   "id": "BL01",
+   "category": "BL",
+   "members": {
+    "a": [
+     {
+      "line": 55,
+      "text": "Wake up at 6:15 and drink a full glass of water before anything else."
+     }
+    ],
+    "b": [
+     {
+      "line": 402,
+      "text": "Wake up at 6:15 and drink a full glass of water before anything else."
+     }
+    ]
+   }
+  },
+  {
+   "id": "BL02",
+   "category": "BL",
+   "members": {
+    "a": [
+     {
+      "line": 56,
+      "text": "Ten minutes of mobility work for hips and shoulders on the living room mat."
+     }
+    ],
+    "b": [
+     {
+      "line": 403,
+      "text": "Ten minutes of mobility work for hips and shoulders on the living room mat."
+     }
+    ]
+   }
+  },
+  {
+   "id": "BL03",
+   "category": "BL",
+   "members": {
+    "a": [
+     {
+      "line": 57,
+      "text": "Write the three priorities of the day on a sticky note before opening the laptop."
+     }
+    ],
+    "b": [
+     {
+      "line": 404,
+      "text": "Write the three priorities of the day on a sticky note before opening the laptop."
+     }
+    ]
+   }
+  },
+  {
+   "id": "BL04",
+   "category": "BL",
+   "members": {
+    "a": [
+     {
+      "line": 58,
+      "text": "No news and no social media until the first work block is finished."
+     }
+    ],
+    "b": [
+     {
+      "line": 405,
+      "text": "No news and no social media until the first work block is finished."
+     }
+    ]
+   }
+  },
+  {
+   "id": "SM01",
+   "category": "SM",
+   "members": {
+    "a": [
+     {
+      "line": 329,
+      "text": "The weekend in the mountains with Maya was exactly the reset I needed: long hikes, no phones and early nights."
+     }
+    ],
+    "b": [
+     {
+      "line": 285,
+      "text": "Hiked almost six hours on Saturday up to the lake and back, legs destroyed but happy."
+     },
+     {
+      "line": 286,
+      "text": "We left both phones in the car for the whole weekend and it felt strangely free."
+     },
+     {
+      "line": 287,
+      "text": "In bed by 9:30 both nights at the cabin, slept like a stone."
+     }
+    ]
+   }
+  },
+  {
+   "id": "SM02",
+   "category": "SM",
+   "members": {
+    "a": [
+     {
+      "line": 544,
+      "text": "Budget review for March: overspent on restaurants and subscriptions, groceries were fine."
+     }
+    ],
+    "b": [
+     {
+      "line": 489,
+      "text": "Restaurants and takeaway came to 310 euros in March, almost double what I planned."
+     },
+     {
+      "line": 490,
+      "text": "Found four subscriptions I forgot about, 52 euros a month in total."
+     },
+     {
+      "line": 491,
+      "text": "Groceries stayed under the 280 euro target for March."
+     }
+    ]
+   }
+  },
+  {
+   "id": "SM03",
+   "category": "SM",
+   "members": {
+    "a": [
+     {
+      "line": 725,
+      "text": "Retro on the Atlas cutover: the dry run saved us, communication with the support team was the weak point."
+     }
+    ],
+    "b": [
+     {
+      "line": 716,
+      "text": "The dry run on the staging database caught two schema errors that would have blocked the real cutover."
+     },
+     {
+      "line": 717,
+      "text": "Support only heard about the Atlas downtime window the day before, which made them furious."
+     }
+    ]
+   }
+  },
+  {
+   "id": "SH01",
+   "category": "SH",
+   "members": {
+    "a": [
+     {
+      "line": 7,
+      "text": "Drink more water."
+     }
+    ],
+    "b": [
+     {
+      "line": 387,
+      "text": "Drink more water."
+     }
+    ]
+   }
+  },
+  {
+   "id": "SH02",
+   "category": "SH",
+   "members": {
+    "a": [
+     {
+      "line": 29,
+      "text": "Renew passport before June."
+     }
+    ],
+    "b": [
+     {
+      "line": 480,
+      "text": "Renew the passport before June."
+     }
+    ]
+   }
+  },
+  {
+   "id": "SH03",
+   "category": "SH",
+   "members": {
+    "a": [
+     {
+      "line": 136,
+      "text": "Less sugar in the evening."
+     }
+    ],
+    "b": [
+     {
+      "line": 512,
+      "text": "Less sugar in the evenings."
+     }
+    ]
+   }
+  },
+  {
+   "id": "SH04",
+   "category": "SH",
+   "members": {
+    "a": [
+     {
+      "line": 229,
+      "text": "Back up the laptop."
+     }
+    ],
+    "b": [
+     {
+      "line": 546,
+      "text": "Backup laptop!"
+     }
+    ]
+   }
+  },
+  {
+   "id": "SH05",
+   "category": "SH",
+   "members": {
+    "a": [
+     {
+      "line": 225,
+      "text": "Maya's birthday: order the ring."
+     }
+    ],
+    "b": [
+     {
+      "line": 613,
+      "text": "Maya's birthday: order the ring."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ST01",
+   "category": "ST",
+   "members": {
+    "a": [
+     {
+      "line": 110,
+      "text": "I always underestimate how long admin tasks take, so double every estimate."
+     }
+    ],
+    "b": [
+     {
+      "line": 621,
+      "text": "I always underestimate how long admin tasks take, so double every estimate."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ST02",
+   "category": "ST",
+   "members": {
+    "a": [
+     {
+      "line": 203,
+      "text": "Bad day. Skipped the run again because it was raining and then felt guilty all evening. Need a plan B for rainy days."
+     }
+    ],
+    "b": [
+     {
+      "line": 511,
+      "text": "Skipped the run again because it was raining and then felt guilty all evening."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ST03",
+   "category": "ST",
+   "members": {
+    "a": [
+     {
+      "line": 301,
+      "text": "Batch the small chores, e.g. laundry, dishes and bills, into one hour on Saturday morning."
+     }
+    ],
+    "b": [
+     {
+      "line": 611,
+      "text": "Batch the small chores (laundry, dishes, bills) into a single hour on Saturday morning."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ST04",
+   "category": "ST",
+   "members": {
+    "a": [
+     {
+      "line": 321,
+      "text": "Saw Dr. Lindqvist today, she wants me to do the knee exercises twice a day for six weeks."
+     }
+    ],
+    "b": [
+     {
+      "line": 649,
+      "text": "The physio wants me to do the knee exercises twice a day for six weeks."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ST05",
+   "category": "ST",
+   "members": {
+    "a": [
+     {
+      "line": 331,
+      "text": "Ask Priya whether the conference budget covers the workshop day as well."
+     }
+    ],
+    "b": [
+     {
+      "line": 659,
+      "text": "Ask Priya whether the conference budget covers the workshop day as well."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ST06",
+   "category": "ST",
+   "members": {
+    "a": [
+     {
+      "line": 249,
+      "text": "I should block two hours every morning for focused work and defend them"
+     }
+    ],
+    "b": [
+     {
+      "line": 528,
+      "text": "Block two hours every morning for focused work and defend them."
+     }
+    ]
+   }
+  },
+  {
+   "id": "MS01",
+   "category": "MS",
+   "members": {
+    "a": [
+     {
+      "line": 20,
+      "text": "need to stop saying yes to everything at work, I end up doing other people's jobs"
+     }
+    ],
+    "b": [
+     {
+      "line": 333,
+      "text": "stop saying yes to evrything at work!! end up doing other ppl's job"
+     }
+    ]
+   }
+  },
+  {
+   "id": "MS02",
+   "category": "MS",
+   "members": {
+    "a": [
+     {
+      "line": 117,
+      "text": "Sugar in the afternoon makes me sleepy and irritable an hour later."
+     }
+    ],
+    "b": [
+     {
+      "line": 367,
+      "text": "sugar in the pm = sleepy + irritable 1h later"
+     }
+    ]
+   }
+  },
+  {
+   "id": "MS03",
+   "category": "MS",
+   "members": {
+    "a": [
+     {
+      "line": 147,
+      "text": "I never regret going for a run, but I always regret skipping one."
+     }
+    ],
+    "b": [
+     {
+      "line": 418,
+      "text": "never regret a run, always regret skipping it. ALWAYS"
+     }
+    ]
+   }
+  },
+  {
+   "id": "MS04",
+   "category": "MS",
+   "members": {
+    "a": [
+     {
+      "line": 69,
+      "text": "Mum's knee operation is confirmed for the second week of March."
+     }
+    ],
+    "b": [
+     {
+      "line": 456,
+      "text": "mum knee op confirmed, 2nd week of march"
+     }
+    ]
+   }
+  },
+  {
+   "id": "MS05",
+   "category": "MS",
+   "members": {
+    "a": [
+     {
+      "line": 195,
+      "text": "Talking to Léa for ten minutes fixes my mood more than an hour of scrolling."
+     }
+    ],
+    "b": [
+     {
+      "line": 492,
+      "text": "10 min talking w/ Léa > 1h scrolling, mood-wise"
+     }
+    ]
+   }
+  },
+  {
+   "id": "MS06",
+   "category": "MS",
+   "members": {
+    "a": [
+     {
+      "line": 170,
+      "text": "The meeting with finance could have been an email, as usual."
+     }
+    ],
+    "b": [
+     {
+      "line": 537,
+      "text": "finance meeting = could've been an email. as usual"
+     }
+    ]
+   }
+  },
+  {
+   "id": "MS07",
+   "category": "MS",
+   "members": {
+    "a": [
+     {
+      "line": 224,
+      "text": "I am more patient with Maya when I have slept enough."
+     }
+    ],
+    "b": [
+     {
+      "line": 566,
+      "text": "more patient w maya when i've slept enough, obviously"
+     }
+    ]
+   }
+  },
+  {
+   "id": "MS08",
+   "category": "MS",
+   "members": {
+    "a": [
+     {
+      "line": 236,
+      "text": "Ask the landlord for a written confirmation of the new rent before signing anything."
+     }
+    ],
+    "b": [
+     {
+      "line": 604,
+      "text": "ask landlord for WRITTEN confirmation of new rent before signing anything"
+     }
+    ]
+   }
+  },
+  {
+   "id": "LN01",
+   "category": "LN",
+   "members": {
+    "a": [
+     {
+      "line": 47,
+      "text": "the flat is too warm at night, need to turn the radiator off before bed"
+     }
+    ],
+    "b": [
+     {
+      "line": 390,
+      "text": "flat too warm at night, turn the radiator off before going to bed"
+     }
+    ]
+   }
+  },
+  {
+   "id": "LN02",
+   "category": "LN",
+   "members": {
+    "a": [
+     {
+      "line": 49,
+      "text": "phone was on the nightstand again, scrolled until 1am"
+     }
+    ],
+    "b": [
+     {
+      "line": 431,
+      "text": "Phone on the nightstand again last night and I scrolled until 1am."
+     }
+    ]
+   }
+  },
+  {
+   "id": "LN03",
+   "category": "LN",
+   "members": {
+    "a": [
+     {
+      "line": 159,
+      "text": "the best conversations with Maya happen on walks, not at the table"
+     }
+    ],
+    "b": [
+     {
+      "line": 391,
+      "text": "best talks with Maya are always on walks, never sitting at the table"
+     }
+    ]
+   }
+  },
+  {
+   "id": "LN04",
+   "category": "LN",
+   "members": {
+    "a": [
+     {
+      "line": 292,
+      "text": "I spend the first hour at work answering messages instead of doing the hard thing"
+     }
+    ],
+    "b": [
+     {
+      "line": 513,
+      "text": "The first hour at work goes to answering messages instead of the hard task."
+     }
+    ]
+   }
+  },
+  {
+   "id": "LN05",
+   "category": "LN",
+   "members": {
+    "a": [
+     {
+      "line": 158,
+      "text": "tom asked again about the camping trip in july, still have not checked the dates"
+     }
+    ],
+    "b": [
+     {
+      "line": 516,
+      "text": "Tom asked about camping in July again and I still haven't checked the dates"
+     }
+    ]
+   }
+  },
+  {
+   "id": "NF01",
+   "category": "NF",
+   "members": {
+    "a": [
+     {
+      "line": 5,
+      "text": "Ran 5 km this morning along the canal, felt light and fast."
+     }
+    ],
+    "b": [
+     {
+      "line": 309,
+      "text": "Ran 8 km this morning along the canal, felt heavy and slow."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NF02",
+   "category": "NF",
+   "members": {
+    "a": [
+     {
+      "line": 204,
+      "text": "Dinner with Maya's parents on Friday, need to bring wine."
+     }
+    ],
+    "b": [
+     {
+      "line": 533,
+      "text": "Dinner with Tom and his girlfriend on Saturday, need to bring dessert."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NF03",
+   "category": "NF",
+   "members": {
+    "a": [
+     {
+      "line": 116,
+      "text": "Sleep log: 7h30 in bed, woke up once, mood 7 out of 10."
+     }
+    ],
+    "b": [
+     {
+      "line": 442,
+      "text": "Sleep log: 5h45 in bed, woke up three times, mood 4 out of 10."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NF04",
+   "category": "NF",
+   "members": {
+    "a": [
+     {
+      "line": 35,
+      "text": "Meeting with Jonas about the Atlas test plan, he will write the first draft."
+     }
+    ],
+    "b": [
+     {
+      "line": 365,
+      "text": "Meeting with Priya about the Atlas budget, she will ask finance for an answer."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NF05",
+   "category": "NF",
+   "members": {
+    "a": [
+     {
+      "line": 96,
+      "text": "Practised the Chopin prelude for 25 minutes, the left hand is still uneven."
+     }
+    ],
+    "b": [
+     {
+      "line": 429,
+      "text": "Practised the Satie piece for 40 minutes, the pedalling is finally clean."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NF06",
+   "category": "NF",
+   "members": {
+    "a": [
+     {
+      "line": 129,
+      "text": "Paid the electricity bill for January, 86 euros."
+     }
+    ],
+    "b": [
+     {
+      "line": 479,
+      "text": "Paid the internet bill for February, 39 euros."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NF07",
+   "category": "NF",
+   "members": {
+    "a": [
+     {
+      "line": 118,
+      "text": "bad night, 5h of sleep, headache until noon"
+     }
+    ],
+    "b": [
+     {
+      "line": 443,
+      "text": "good night, 8h of sleep, no headache at all"
+     }
+    ]
+   }
+  },
+  {
+   "id": "NF08",
+   "category": "NF",
+   "members": {
+    "a": [
+     {
+      "line": 266,
+      "text": "call with mum, 20 min, she is fine, knee still hurts"
+     }
+    ],
+    "b": [
+     {
+      "line": 581,
+      "text": "call with dad, 20 min, he is fine, garden is flooded"
+     }
+    ]
+   }
+  },
+  {
+   "id": "CF01",
+   "category": "CF",
+   "members": {
+    "a": [
+     {
+      "line": 14,
+      "text": "The rent goes up to 1,150 euros starting in September."
+     }
+    ],
+    "b": [
+     {
+      "line": 384,
+      "text": "The rent goes up to 1,250 euros starting in September."
+     }
+    ]
+   }
+  },
+  {
+   "id": "CF02",
+   "category": "CF",
+   "members": {
+    "a": [
+     {
+      "line": 135,
+      "text": "The Atlas cutover is scheduled for the weekend of 14 June."
+     }
+    ],
+    "b": [
+     {
+      "line": 488,
+      "text": "The Atlas cutover is scheduled for the weekend of 28 June."
+     }
+    ]
+   }
+  },
+  {
+   "id": "CF03",
+   "category": "CF",
+   "members": {
+    "a": [
+     {
+      "line": 237,
+      "text": "My resting heart rate is down to 58 since I started running regularly."
+     }
+    ],
+    "b": [
+     {
+      "line": 555,
+      "text": "My resting heart rate is down to 52 since I started running regularly."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NG01",
+   "category": "NG",
+   "members": {
+    "a": [
+     {
+      "line": 108,
+      "text": "Coffee after 2pm ruins my sleep, even a single espresso."
+     }
+    ],
+    "b": [
+     {
+      "line": 428,
+      "text": "Coffee after 2pm no longer seems to affect my sleep, even a double espresso."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NG02",
+   "category": "NG",
+   "members": {
+    "a": [
+     {
+      "line": 192,
+      "text": "Working from the café makes me more productive than working from home."
+     }
+    ],
+    "b": [
+     {
+      "line": 500,
+      "text": "Working from the café makes me less productive than working from home."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NG03",
+   "category": "NG",
+   "members": {
+    "a": [
+     {
+      "line": 276,
+      "text": "I think I should accept the team lead position if they offer it."
+     }
+    ],
+    "b": [
+     {
+      "line": 601,
+      "text": "I think I should refuse the team lead position if they offer it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "NG04",
+   "category": "NG",
+   "members": {
+    "a": [
+     {
+      "line": 311,
+      "text": "Cold showers in the morning improve my mood for the rest of the day."
+     }
+    ],
+    "b": [
+     {
+      "line": 620,
+      "text": "Cold showers in the morning do nothing for my mood, I'm dropping them."
+     }
+    ]
+   }
+  },
+  {
+   "id": "TP01",
+   "category": "TP",
+   "members": {
+    "a": [
+     {
+      "line": 26,
+      "text": "The knee hurts on the outside when I go down stairs."
+     }
+    ],
+    "b": [
+     {
+      "line": 366,
+      "text": "The knee exercises are boring but they only take eight minutes."
+     }
+    ]
+   }
+  },
+  {
+   "id": "TP02",
+   "category": "TP",
+   "members": {
+    "a": [
+     {
+      "line": 128,
+      "text": "Maya is stressed about her thesis defence in May."
+     }
+    ],
+    "b": [
+     {
+      "line": 478,
+      "text": "Maya found a cheap flight to Lisbon for the first week of July."
+     }
+    ]
+   }
+  },
+  {
+   "id": "TP03",
+   "category": "TP",
+   "members": {
+    "a": [
+     {
+      "line": 193,
+      "text": "The Atlas staging database is too slow for realistic load tests."
+     }
+    ],
+    "b": [
+     {
+      "line": 508,
+      "text": "The Atlas documentation needs a proper onboarding page for new developers."
+     }
+    ]
+   }
+  },
+  {
+   "id": "TP04",
+   "category": "TP",
+   "members": {
+    "a": [
+     {
+      "line": 95,
+      "text": "Dad wants to sell the house and move closer to the sea."
+     }
+    ],
+    "b": [
+     {
+      "line": 386,
+      "text": "Dad's birthday is on the 19th, Tom is organising the dinner."
+     }
+    ]
+   }
+  },
+  {
+   "id": "TP05",
+   "category": "TP",
+   "members": {
+    "a": [
+     {
+      "line": 215,
+      "text": "I spend too much on takeaway when I work late."
+     }
+    ],
+    "b": [
+     {
+      "line": 534,
+      "text": "The cheapest groceries are at the market on Saturday just before closing."
+     }
+    ]
+   }
+  },
+  {
+   "id": "TP06",
+   "category": "TP",
+   "members": {
+    "a": [
+     {
+      "line": 277,
+      "text": "The piano teacher moved the lesson to Tuesday evenings."
+     }
+    ],
+    "b": [
+     {
+      "line": 602,
+      "text": "A digital piano with headphones would let me practise late at night."
+     }
+    ]
+   }
+  }
+ ]
+}
